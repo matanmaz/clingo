@@ -1,0 +1,11 @@
+budget(10).
+apples(fuji; gala; red).
+fruit_cost(fuji,2).
+fruit_cost(gala,4).
+fruit_cost(red,3).
+fruit_calories(fuji,54).
+fruit_calories(gala,72).
+fruit_calories(red,69).
+fruit_available(fuji,3).
+fruit_available(gala,5).
+fruit_available(red,2).

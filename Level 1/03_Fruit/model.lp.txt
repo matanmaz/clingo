@@ -1,0 +1,41 @@
+#include "assertions.lp.txt".
+
+0{buy(QUANTITY, TYPE, COST*QUANTITY, QUANTITY*CALORIES): QUANTITY = 1..AVAILABLE}1 :-  apples(TYPE), fruit_available(TYPE, AVAILABLE), fruit_cost(TYPE,COST), fruit_calories(TYPE, CALORIES).
+
+#show total_cost/1.
+#show total_quantity/1.
+#show total_nutrients/1.
+#show buy/4.
+total_cost(X) :- X = #sum{I, TYPE : buy(_,TYPE,I,_)}.
+total_quantity(X) :- X = #sum{I, TYPE : buy(I,TYPE,_,_)}.
+total_nutrients(X) :- X = #sum{I, TYPE : buy(_,TYPE,_,I)}.
+
+:- total_cost(X), budget(Y), X > Y.
+
+%#maximize { X : total_quantity(X) }.
+
+%question 3
+%answer 4
+%question 4
+%answer total cost is 10 or 9
+%Q5
+%3 solutions
+%Q6
+%:- not total_cost(X), X==9.
+%4 solutions cost 10, 2 solutions cost 9
+%Q7
+%0 bags?
+%Q8
+%1 solution
+%Q9
+%#maximize{ X : total_nutrients(X) }.
+%246
+%Q10
+%:- not total_nutrients(X), X==246.
+%just 1
+%Q11
+%#maximize{ X@3 : total_quantity(X) }.
+%#minimize{ X@2 : total_cost(X) }.
+%#maximize{ X@1 : total_nutrients(X) }.
+%buy(3,fuji,6,162) buy(1,red,3,69) total_nutrients(231) total_cost(9) total_quantity(4)
+%Optimization: -4 9 -231
