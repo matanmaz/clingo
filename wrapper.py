@@ -18,6 +18,7 @@ class DataOrganizer:
             term, values = match
             # Split the values by comma and remove unnecessary spaces or quotes
             values_list = [value.strip().strip('"') for value in values.split(',')]
+            values_list = [(int(value) if value.isdigit() else value) for value in values_list]
             
             if term not in self.data:
                 self.data[term] = []
@@ -38,20 +39,6 @@ class DataOrganizer:
         else:
             print(f"Invalid type: {type_name}")
     
-    def print(self):
-        lines = {}
-        for name in self.data['full_name']:
-            first_name = name[0]
-            last_name = name[1]
-            for fc in self.data['fc']:
-                if fc[0] == first_name:
-                  camp = fc[1]
-            for fl in self.data['fl']:
-                if fl[0] == first_name:
-                  location = fl[1]
-            lines[location]=[first_name, last_name, camp, location]
-        for key in sorted(lines):
-            print(lines[key])
 class Context:
   def first_letter(self, word):
     return clingo.String(word.string[0])
@@ -84,9 +71,9 @@ with open(path, 'r') as file:
 
 ctl.add("base", [], clingo_file_text)
 ctl.ground([("base", [])], context=Context())
-count = 2
+max_models = 2
 with ctl.solve(yield_=True, async_=True) as hnd:
-    while count>0:
+    while max_models>0:
         hnd.resume()
         _ = hnd.wait()
         m = hnd.model()
@@ -94,4 +81,4 @@ with ctl.solve(yield_=True, async_=True) as hnd:
             print(hnd.get())
             break
         on_model(m)
-        count = count - 1
+        max_models = max_models - 1
