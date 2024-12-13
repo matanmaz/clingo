@@ -38,10 +38,7 @@ class DataOrganizer:
                 print(f"No {type_name} found.")
         else:
             print(f"Invalid type: {type_name}")
-    
-class Context:
-  def first_letter(self, word):
-    return clingo.String(word.string[0])
+
 
 def on_model(m):
 

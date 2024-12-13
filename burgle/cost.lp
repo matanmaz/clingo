@@ -1,4 +1,5 @@
 point_of_entry("Open Door";"Window";"Garage Door";"Door Opener Code";"Access Garage";"Passage Door";"Penetrate House";"Other methods").
+method_cost("Open Door","Break Down",25).
 method_cost("Open Door","Pick Lock",250).
 method_cost("Open Door","Steal Key",2).
 method_cost("Window","Break Glass",1).
