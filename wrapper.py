@@ -57,7 +57,7 @@ def on_model(m):
             terms.append(arg)
   else:
       terms = ['result']
-      indeces = [1]
+      indeces = [0]
   terms_dict = dict(zip(terms, indeces))
   for term in terms_dict:
       organizer.print_by_type(term, terms_dict[term])
@@ -71,14 +71,19 @@ with open(path, 'r') as file:
 
 ctl.add("base", [], clingo_file_text)
 ctl.ground([("base", [])], context=Context())
-max_models = 2
+max_models = 10
 with ctl.solve(yield_=True, async_=True) as hnd:
     while max_models>0:
         hnd.resume()
         _ = hnd.wait()
         m = hnd.model()
         if m is None:
+            print(f"no more models")
             print(hnd.get())
             break
+        print(f"optimal:",m.optimality_proven,"cost",m.cost)
         on_model(m)
         max_models = max_models - 1
+        if m.optimality_proven:
+            print(f"optimal found")
+            break
