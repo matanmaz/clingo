@@ -1,0 +1,6 @@
+Here's the plan for how to program mastermind:
+python will create an initial guess and reply. It will use this to ground and solve with clingo.
+The first answer set will be the second guess. Python will continue this loop until the reply is 4 black pegs.
+This means clingo needs to continue to add more and more constraints as every previous guess and reply each create constraints. For example if the first guess is 1,2,3,4 and reply is B,Y,N,N that means 1 is correct and 2 is someplace else. Then a second guess 1, 5, 2, 6 is B, Y, Y, Y it is important to know the past that 3 and 4 are not in the answer. Meaning for each color it is important to know where it was guessed. An answer B is clearly :- not answer(color, index) but then answer Y is 1{answer(color, I): index(I), I!=index}.
+The simplest implementation is to use python to add clingo predicates dynamically. I haven't done this yet so it should be a good learning opportunity.
+The clingo model in general will say there are 6 colors and 4 indeces each having only one color. That's pretty basic. The python will have to respond to the clingo answer set, then append to the clingo the new predicates that the response will generate and ground and solve again.

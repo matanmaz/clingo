@@ -67,7 +67,7 @@ with open(path, 'r') as file:
     clingo_file_text = file.read()
 
 ctl.add("base", [], clingo_file_text)
-ctl.ground([("base", [])], context=Context())
+ctl.ground([("base", [])])
 max_models = 10
 with ctl.solve(yield_=True, async_=True) as hnd:
     while max_models>0:
