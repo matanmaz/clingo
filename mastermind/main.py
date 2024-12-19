@@ -91,13 +91,16 @@ class Solver:
             index = str(i + 1)
             if lastResponse[i]==0:#no peg
                 predicates += '\n:- guess(_, ' + color + ').'
+                predicates += '\n:- possible_goal(_, ' + color + ').'
             elif lastResponse[i]==1:#white peg
                 #1{guess(I, 3): index(I), I!=3}.
                 #:- guess(3,3).
                 predicates += '\n1{guess(I, '+color+'): index(I), I!='+index+'}.'
                 predicates += '\n:- guess('+index+', ' + color + ').'
+                predicates += '\n:- possible_goal('+index+', ' + color + ').'
             else:#black peg
                 predicates += '\n:- not guess('+index+', ' + color + ').'
+                predicates += '\n:- possible_goal('+index+', C), C!='+color+'.'
         self.clingo_text += predicates
 
     def parseAnswer(self, model):
